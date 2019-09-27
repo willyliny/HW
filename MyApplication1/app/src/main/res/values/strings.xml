@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">My Application1</string>
+    <string name="button_msg">按鈕</string>
+    <string name="ed_name_msg">請輸入玩家姓名</string>
+    <string name="tv_text_msg">請輸入姓名以開始遊戲</string>
+    <string name="btn_mora">猜拳</string>
+    <string name="btn_scissor">剪刀</string>
+    <string name="btn_stone">石頭</string>
+    <string name="btn_paper">布</string>
+    <string name="tv_name">名子</string>
+    <string name="tv_winner">勝利者</string>
+    <string name="tv_mmora">我方出拳</string>
+    <string name="tv_cmora">電腦出拳</string>
+</resources>
