@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lab2</string>
+    <string name="app_name">Lab3</string>
     <string name="button_msg">按鈕</string>
     <string name="ed_name_msg">請輸入玩家姓名</string>
     <string name="tv_text_msg">請輸入姓名以開始遊戲</string>
