@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
         val tv_text = findViewById<TextView>(R.id.tv_text)
         val radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
         val btn_scissor = findViewById<RadioButton>(R.id.btn_scissor)
+        val btn_stone = findViewById<RadioButton>(R.id.btn_stone)
+        val btn_paper = findViewById<RadioButton>(R.id.btn_paper)
 
         btn_mora.setOnClickListener{
             if(ed_name.length()<1)
