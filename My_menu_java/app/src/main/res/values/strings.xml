@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">點餐系統</string>
+    <string name="tv_book">點餐:</string>
+    <string name="btn_choice">選擇</string>
+    <string name="tv_drink">飲料:</string>
+    <string name="tv_check">確認餐點:</string>
+    <string name="tv_ice">冰塊:</string>
+    <string name="tv_sugar">甜度:</string>
+    <string name="tv_null">null</string>
+
+    <string name="radio_sugar1">無糖</string>
+    <string name="radio_sugar2">少糖</string>
+    <string name="radio_sugar3">半糖</string>
+    <string name="radio_sugar4">全糖</string>
+
+    <string name="radio_ice1">微冰</string>
+    <string name="radio_ice2">少冰</string>
+    <string name="radio_ice3">正常冰</string>
+    <string name="btn_send">送出</string>
+</resources>
