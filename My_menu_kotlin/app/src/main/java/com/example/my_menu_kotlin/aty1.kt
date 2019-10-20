@@ -1,9 +1,10 @@
 package com.example.my_menu_kotlin
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.main1.*
 
 class aty1 : AppCompatActivity() {
@@ -11,15 +12,16 @@ class aty1 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main1)
+        val intent = Intent(this,aty2::class.java)
         btn_choice.setOnClickListener {
-            startActivityForResult(Intent(this,aty2::class.java),0)
+            startActivityForResult(intent,0)
         }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        val b = data?.extras?:return
         if(requestCode == 0){
             if(resultCode == 101){
-                val b = Bundle()
                 val str1 = b.getString("drink_level")
                 val str2 = b.getString("sugar_level")
                 val str3 = b.getString("ice_level")
@@ -36,4 +38,3 @@ class aty1 : AppCompatActivity() {
         }
     }
 }
-
