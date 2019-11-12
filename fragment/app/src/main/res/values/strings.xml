@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">fragment_kotlin</string>
+    <string name="move_Left">往左滑動</string>
+    <string name="move_Right">往右滑動</string>
+    <string name="FirstPage">首頁</string>
+    <string name="SecondPage">第二頁</string>
+    <string name="ThirdPage">第三頁</string>
+</resources>
