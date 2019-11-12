@@ -1,5 +1,4 @@
 package com.example.fragment_kotlin
-
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +10,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val TAG = "MainActivity"
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //初始化頁面
@@ -21,44 +19,37 @@ class MainActivity : AppCompatActivity() {
         //連接Adapter，讓畫面(Fragment)與ViewPager建立關聯
         viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
     }
-
     override fun onRestart() {
         super.onRestart()
         //返回頁面
         Log.e(TAG,"onRestart")
     }
-
     override fun onStart() {
         super.onStart()
         //頁面可見
         Log.e(TAG,"onStart")
     }
-
     override fun onResume() {
         super.onResume()
         //頁面與使用者開始互動
         Log.e(TAG,"onResume")
     }
-
     override fun onPause() {
         super.onPause()
         //離開頁面
         Log.e(TAG,"onPause")
     }
-
     override fun onStop() {
         super.onStop()
         //頁面不可見
         Log.e(TAG,"onStop")
     }
-
     override fun onDestroy() {
         super.onDestroy()
         //回收頁面
         Log.e(TAG,"onDestroy")
     }
 }
-
 class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     //回傳對應位置的Fragment，決定頁面的呈現順序
     override fun getItem(position: Int) = when(position){
