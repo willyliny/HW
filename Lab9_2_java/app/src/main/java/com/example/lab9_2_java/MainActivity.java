@@ -3,108 +3,109 @@ package com.example.lab9_2_java;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
-import android.widget.Button;
-import android.widget.SeekBar;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private  int rabprogress = 0 , turprogress = 0;
-    private SeekBar seekBar,seekBar2;
-    private Button btn_start;
+    private EditText ed_height, ed_weight;
+    private RadioButton btn_boy;
+    private TextView tv_weight, tv_bmi, tv_progress;
+    private LinearLayout ll_progress;
+    private ProgressBar progressBar2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        seekBar = findViewById(R.id.seekBar);
-        seekBar2 = findViewById(R.id.seekBar2);
-        btn_start = findViewById(R.id.btn_start);
+        ed_height = findViewById(R.id.ed_height);
+        ed_weight = findViewById(R.id.ed_weight);
+        btn_boy = findViewById(R.id.btn_boy);
+        tv_weight = findViewById(R.id.tv_weight);
+        tv_bmi = findViewById(R.id.tv_bmi);
+        tv_progress = findViewById(R.id.tv_progress);
+        ll_progress = findViewById(R.id.ll_progress);
+        progressBar2 = findViewById(R.id.progressBar2);
 
-        btn_start.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_calculate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn_start.setEnabled(false);
-
-                rabprogress=0;
-                turprogress=0;
-                seekBar.setProgress(0);
-                seekBar2.setProgress(0);
-                runThread();
-                runAsyncTask();
+                if (ed_height.length() < 1)
+                    Toast.makeText(MainActivity.this, "請輸入身高"
+                            , Toast.LENGTH_SHORT).show();
+                else if (ed_weight.length() < 1)
+                    Toast.makeText(MainActivity.this, "請輸入體重"
+                            , Toast.LENGTH_SHORT).show();
+                else
+                    runAsyncTask();
             }
         });
     }
 
-
-private void runThread(){
-    new Thread(new Runnable() {
-        @Override
-        public void run() {
-            while (rabprogress<=100 && turprogress<=100){
-                try {
-                    Thread.sleep(100);
-
-                    rabprogress += (int) (Math.random() * 3);
-
-                    Message msg = new Message();
-                    msg.what = 1;
-                    mHandler.sendMessage(msg);
-                }catch (InterruptedException e){
-                    e.printStackTrace();
-                }
+    @SuppressLint("StaticFieldLeak")
+    private void runAsyncTask() {
+        new AsyncTask<Void, Integer, Boolean>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                ll_progress.setVisibility(View.GONE);
+                tv_weight.setText("標準體重\n無");
+                tv_bmi.setText("體脂肪\n無");
+                progressBar2.setProgress(0);
+                tv_progress.setText("0%");
+                ll_progress.setVisibility(View.VISIBLE);
             }
-        }
-    }).start();
-}
-private Handler mHandler = new Handler(new Handler.Callback() {
-    @Override
-    public boolean handleMessage(@NonNull Message msg) {
-        switch (msg.what){
-            case 1:
-                seekBar.setProgress(rabprogress);
-                break;
-        }
-        if(rabprogress >=100 && turprogress<100){
-            Toast.makeText(MainActivity.this,"兔子勝利",Toast.LENGTH_SHORT).show();
-            btn_start.setEnabled(true);
-        }
-        return false;
+
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                int progress = 0;
+                while (progress <= 100) {
+                    try {
+                        Thread.sleep(50);
+                        publishProgress(progress);
+                        progress++;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return true;
+            }
+
+            @Override
+            protected void onProgressUpdate(Integer... values) {
+                super.onProgressUpdate(values);
+                progressBar2.setProgress(values[0]);
+                tv_progress.setText(values[0]+"%");
+            }
+            @Override
+            protected void onPostExecute(Boolean aBoolean){
+                super.onPostExecute(aBoolean);
+                ll_progress.setVisibility(View.GONE);
+                int h = Integer.valueOf(ed_height.getText().toString());
+
+                int w = Integer.valueOf(ed_weight.getText().toString());
+                double standWeight, bodyFat;
+                if (btn_boy.isChecked()) {
+                    standWeight = (h - 80) * 0.7;
+                    bodyFat = (w - 0.88 * standWeight) / w * 100;
+                } else {
+                    standWeight = (h - 70) * 0.6;
+                    bodyFat = (w - 0.82 * standWeight) / w * 100;
+                }
+
+                tv_weight.setText(String.format("標準體重\n %.2f", standWeight));
+                tv_bmi.setText(String.format("體脂肪\n %.2f", bodyFat));
+            }
+        }.execute();
     }
-});
-private void runAsyncTask(){
-    new AsyncTask<Void,Integer,Boolean>(){
-        @Override
-        protected Boolean doInBackground(Void... voids){
-            while(turprogress <= 100 && rabprogress <100){
-                try{
-                    Thread.sleep(100);
-                    turprogress+=(int)(Math.random()*3);
-                    publishProgress(turprogress);
-                }catch (InterruptedException e){
-                    e.printStackTrace();
-                }
-            }
-            return  true;
-        }
-        @Override
-        protected void onProgressUpdate(Integer... values){
-            super.onProgressUpdate(values);
-            seekBar2.setProgress(values[0]);
-        }
-        @Override
-        protected  void onPostExecute(Boolean aBoolean){
-            super.onPostExecute(aBoolean);
-            if(turprogress>=100 && rabprogress <100){
-                Toast.makeText(MainActivity.this,"烏龜勝利",Toast.LENGTH_SHORT).show();
-                btn_start.setEnabled(true);
-            }
-        }
-    }.execute();
 }
-}
-
